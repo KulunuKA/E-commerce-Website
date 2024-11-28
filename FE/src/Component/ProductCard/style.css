@@ -1,0 +1,94 @@
+:root {
+    --main-color: #e10a1d;
+    --text-primary: #4a4a4a; /* Slightly darker for better readability */
+    --hover-bg-color: rgba(0, 0, 0, 0.6);
+    --hover-text-color: #fff;
+    --price-color: #333; /* Darker for professional feel */
+  }
+  
+  .newA-Item {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 450px;
+    border: 1px solid #eaeaea;
+    border-radius: 8px; 
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .newA-Item:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Soft shadow on hover */
+  }
+  
+  .newA-Img {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .newA-Img img {
+    width: 100%;
+    height: 350px;
+    /* object-fit: contain; */
+    border-bottom: 1px solid #eaeaea; /* Separate image from info */
+    transition: transform 0.3s ease;
+  }
+  
+  .newA-Img:hover img {
+    transform: scale(1.05); /* Slight zoom on hover */
+  }
+  
+
+  .viewImg {
+    background-color: var(--hover-bg-color);
+    width: 100%;
+    text-align: center;
+    padding: 1rem 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .newA-Img:hover .viewImg {
+    opacity: 1; /* Show "Select Options" on hover */
+  }
+  
+  .viewImg a {
+    text-decoration: none;
+    color: var(--hover-text-color);
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  
+  .newA-info {
+    padding: 10px ;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .newA-info p:nth-child(1) {
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 500;
+    height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #price {
+    margin-top: 5px;
+    color: var(--price-color);
+    font-weight: bold;
+    font-size: 18px;
+  }
+  
+  
+  .addCart span {
+    margin-left: 5px;
+    font-size: 1.2rem;
+  }
+  

@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: outfit;
+}
+
+.loginPage {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 150px;
+}
+
+.loginImg img {
+    width: 650px;
+    height: 100vh;
+    object-fit: cover;
+}
+
+.login-details {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 50px;
+    padding: 50px;
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.login h1 {
+    color: #5a5a5a;
+    
+}
+
+.login p span {
+    color: rgba(29, 29, 247, 0.764);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+
+.password {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+.remember {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+} 

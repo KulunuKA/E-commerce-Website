@@ -1,0 +1,33 @@
+.process{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+.checkOut-title{
+    margin: 2rem;
+    text-align: center;
+}
+.process-step{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.process-img{
+    background: #555454;
+    border-radius: 50%;
+   
+}
+.process img{
+    /* background-color: #c5474700; */
+    padding: 1rem;
+    color: #cb4141;
+    width: 70px;
+}
+.line{
+    background: #555454;
+    height: 2px;
+    width: 100px;
+}

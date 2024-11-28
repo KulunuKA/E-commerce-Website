@@ -1,0 +1,207 @@
+:root{
+    --primary-color: #e10a1d;
+    --secondary-color: #5a5a5a;
+    --tertiary-color: #f8f8f8;
+}
+.category-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    height: 100px;
+}
+
+.category-name p {
+    font-size: 37px;
+    color: var(--secondary-color);
+    text-align: center;
+    padding: 0 20px; 
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+}
+
+.category-name p::before, 
+.category-name p::after {
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: var(--secondary-color);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.category-name p::before {
+    left: -100%; /* Adjust to position the line to the left */
+}
+
+.category-name p::after {
+    right: -100%; /* Adjust to position the line to the right */
+}
+
+
+.allClothing {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 2rem;
+    gap: 50px;
+}
+
+.filter {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background: #f8f8f8;
+    gap: 20px;
+    padding: 3rem 1rem;
+}
+
+#shop {
+    font-weight: 500;
+    font-size: 2rem;
+}
+
+.filter p {
+    color: #5a5a5a;
+    font-weight: 400;
+    /* font-size: 1.5rem;\ */
+}
+
+.all-cate {
+    display: flex;
+    flex-direction: column;
+}
+
+.all-cate-tittle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 50px;
+}
+
+.all-cate-tittle i {
+    cursor: pointer;
+}
+
+.all-cate-tittle p {
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.all-cate-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.all-cate-list p {
+    cursor: pointer;
+
+}
+
+.all-size {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+#size {
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.sizes-btn {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
+
+.sizes-btn p {
+    text-align: center;
+    padding: 0.5rem;
+    margin: 0.3rem;
+    border: 1px solid #5a5a5a;
+    cursor: pointer;
+}
+
+.all-materials {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#material {
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.priceRange {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.priceRange p input {
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    border: 1px solid #5a5a5a;
+}
+
+#price {
+    font-weight: 500;
+    font-weight: 1rem;
+}
+
+.brand-logo {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+#brand {
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.brand-logo img {
+    width: 90px;
+    margin: 0.2rem;
+}
+
+.cloths {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 20px;
+}
+
+.btn{
+    margin: 1rem auto;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.previous {
+    background-color: #f1f1f1;
+    color: black;
+    font-size: 2rem;
+    width: 30px;
+    padding: 1px;
+}
+.next {
+    background-color: #f1f1f1;
+    color: #e10a1d;
+    font-size: 2rem;
+    width: 30px;
+    padding: 1px;
+    
+}
+.round {
+    border-radius: 50%;
+}

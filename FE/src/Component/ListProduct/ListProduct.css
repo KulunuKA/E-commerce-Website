@@ -1,0 +1,66 @@
+/* ListProduct.css */
+
+.listproduct {
+  width: 100%;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+
+.listproduct h1 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.listproduct table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.listproduct table th,
+.listproduct table td {
+  text-align: left;
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+.listproduct table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  color: #555;
+}
+
+.listproduct table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.listproduct table tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+.productImg {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.listproduct table td img {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.listproduct table td {
+  vertical-align: middle;
+  color: #666;
+}
+
+.listproduct .available img {
+  width: 20px;
+  height: 20px;
+}

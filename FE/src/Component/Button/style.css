@@ -1,0 +1,11 @@
+.common-btn{
+    background: #464646;
+    border: none;
+    color: #ffffff;
+    font-size: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.common-btn:hover{
+    opacity: 0.9;
+}

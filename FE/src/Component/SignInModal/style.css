@@ -1,0 +1,44 @@
+.signModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.signModal h3 {
+  font-size: 25px;
+}
+
+.signModal p {
+  text-align: center;
+  font-size: 16px;
+}
+
+.signBtns {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  height: 60px;
+}
+
+.signBtns button {
+  width: 200px;
+  padding: 10px 15px;
+  border-radius: 30px;
+  border: 1px solid #000;
+  background: #fff;
+  cursor: pointer;
+}
+
+.signBtns button:nth-child(2) {
+  background: rgba(238, 82, 82, 1);
+  color: #fff;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .signModal h3 {
+    font-size: 20px;
+  }
+}
