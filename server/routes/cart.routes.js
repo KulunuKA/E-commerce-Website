@@ -11,6 +11,6 @@ const CartRouter = router;
 
 CartRouter.post("/addCart/:productID", auth, addCart);
 CartRouter.get("/getCart/:id", auth, getCart);
-CartRouter.delete("/deleteCart/:id", deleteCart);
+CartRouter.delete("/delete/:id",auth, deleteCart);
 
 module.exports = CartRouter;

@@ -4,56 +4,40 @@ import p1 from "../../assets/Process/p-1.png";
 import p2 from "../../assets/Process/p-2.png";
 import p3 from "../../assets/Process/p-3.png";
 
-export default function CheckOutProcess(props) {
+export default function CheckOutProcess() {
   const pathname = window.location.pathname;
 
-  const activeStyle = {
-    background: "#e10a1d",
-    // background: "#000000",
-    borderRadius: "50%",
-    cursor: "default",
-  };
-  const notActiveStyle = {
-    cursor: "pointer",
-  };
+  const steps = [
+    { path: "/cart", label: "CART", img: p1 },
+    { path: "/checkout", label: "CHECKOUT", img: p2 },
+    { path: "/payment", label: "PAYMENT", img: p3 },
+  ];
+
+  const isActive = (path) => pathname === path;
 
   return (
-    <>
-      <div className="process">
-        <div className="process-step">
-          <div className="process-img">
-            <img
-              src={p1}
-              alt="cart"
-              id="cart"
-              style={
-                pathname === "/Cart" || pathname === "/checkout"
-                  ? activeStyle
-                  : notActiveStyle
-              }
-            />
+    <div className="process">
+      {steps.map((step, index) => (
+        <React.Fragment key={step.path}>
+          <div className="process-step">
+            <div
+              className={`process-img ${isActive(step.path) ? "active" : ""}`}
+            >
+              <img
+                src={step.img}
+                alt={step.label.toLowerCase()}
+                aria-current={isActive(step.path) ? "step" : undefined}
+              />
+            </div>
+            <p
+              className={`process-label ${isActive(step.path) ? "active" : ""}`}
+            >
+              {step.label}
+            </p>
           </div>
-          <p>CART</p>
-        </div>
-        <div className="line"></div>
-        <div className="process-step">
-          <div className="process-img">
-            <img
-              src={p2}
-              alt="cart"
-              style={pathname === "/checkout" ? activeStyle : notActiveStyle}
-            />
-          </div>
-          <p>CHECKOUT</p>
-        </div>
-        <div className="line"></div>
-        <div className="process-step">
-          <div className="process-img">
-            <img src={p3} alt="cart" />
-          </div>
-          <p>PAYMENT</p>
-        </div>
-      </div>
-    </>
+          {index < steps.length - 1 && <div className="line"></div>}
+        </React.Fragment>
+      ))}
+    </div>
   );
 }

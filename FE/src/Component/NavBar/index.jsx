@@ -277,15 +277,6 @@ export default function NavBar() {
     },
   ];
 
-  function images(e) {
-    if (e.target.id === "id") {
-      setImage(
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_w6jSIUGkQio90mtjwOw5LN87DYfbLkRPpEjth3vgFoE9VRaV"
-      );
-    } else {
-    }
-  }
-
   return (
     <>
       <div className="navbar">
@@ -317,10 +308,8 @@ export default function NavBar() {
               </a>
 
               <div className="cart-icon">
-                <a to="/Cart">
-                  <a href="">
-                    <i className="bi bi-cart-fill"></i>
-                  </a>
+                <a href="/cart">
+                  <i className="bi bi-cart-fill"></i>
                 </a>
                 <p>{count} Item</p>
               </div>
@@ -357,12 +346,12 @@ export default function NavBar() {
                     <img src={image} alt="" />
                   </div>
                   <div className="categoryList">
-                    {menCate.map((item) => (
-                      <div className="categoryList1">
+                    {menCate.map((item,index) => (
+                      <div className="categoryList1" key={index}>
                         <p>{item.category}</p>
                         <ul>
-                          {item.subCategory.map((subItem) => (
-                            <li>
+                          {item.subCategory.map((subItem , index) => (
+                            <li key={index}>
                               <a
                                 href=""
                                 onMouseEnter={() => setImage(subItem.image)}
@@ -401,12 +390,12 @@ export default function NavBar() {
                     />
                   </div>
                   <div className="categoryList">
-                    {womenCate.map((item) => (
-                      <div className="categoryList1">
+                    {womenCate.map((item,index) => (
+                      <div className="categoryList1" key={index}>
                         <p>{item.category}</p>
                         <ul>
-                          {item.subCategory.map((subItem) => (
-                            <li>
+                          {item.subCategory.map((subItem,index) => (
+                            <li key={index}>
                               <a
                                 href=""
                                 onMouseEnter={() => setImage(subItem.image)}
@@ -443,12 +432,12 @@ export default function NavBar() {
                     <img src={image} alt="" />
                   </div>
                   <div className="categoryList">
-                    {kidsCate.map((item) => (
-                      <div className="categoryList1">
+                    {kidsCate.map((item,index) => (
+                      <div className="categoryList1" key={index}>
                         <p>{item.category}</p>
                         <ul>
-                          {item.subCategory.map((subItem) => (
-                            <li>
+                          {item.subCategory.map((subItem,index) => (
+                            <li key={index}>
                               <a
                                 href=""
                                 onMouseEnter={() => setImage(subItem.image)}

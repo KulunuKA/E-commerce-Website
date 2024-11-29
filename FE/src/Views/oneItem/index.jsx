@@ -29,6 +29,7 @@ export default function OneItem() {
     fuc1: true,
     fuc2: true,
   });
+  const [btnLoading, setBtnLoading] = useState(false);
   const [item, setItem] = useState({});
   const [similar, setSimilar] = useState([]);
   let [quantity, setQuantity] = useState(1);
@@ -87,7 +88,7 @@ export default function OneItem() {
   //Add product to cart
   const handleCart = async (event) => {
     event.preventDefault();
-
+    setBtnLoading(true);
     if (!reduxUser.email) {
       setAskLogin(true);
       return;
@@ -95,6 +96,8 @@ export default function OneItem() {
 
     try {
       const submitData = {
+        name: item.name,
+        image: item.images[0],
         price: item.price,
         quantity: quantity,
       };
@@ -106,7 +109,9 @@ export default function OneItem() {
         });
         dispatch(setCartItemCount(quantity));
       }
+      setBtnLoading(false);
     } catch (error) {
+      setBtnLoading(false);
       console.log(error);
       notification.error({
         message: "Something went wrong",
@@ -201,7 +206,7 @@ export default function OneItem() {
               <div className="actions">
                 <button onClick={handleCheckout}>BUY</button>
                 <button type="submit" onClick={handleCart}>
-                  Add to Cart
+                  {btnLoading ? <Loading size={20} /> : "ADD TO CART"}
                 </button>
               </div>
             </div>

@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: {
     role: "",
-    id:"",
+    id: "",
     email: "",
     cartItemCount: 0,
     token: "",
@@ -20,9 +20,12 @@ const userSlice = createSlice({
     setCartItemCount: (state, action) => {
       state.user.cartItemCount = state.user.cartItemCount + action.payload;
     },
+    removeCartItemCount: (state, action) => {
+      state.user.cartItemCount = state.user.cartItemCount - action.payload;
+    },
   },
 });
 
-export const { setUser, setCartItemCount } = userSlice.actions;
+export const { setUser, setCartItemCount,removeCartItemCount } = userSlice.actions;
 export const userData = (state) => state.user.user;
 export default userSlice.reducer;

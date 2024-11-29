@@ -27,7 +27,8 @@ export const getOneProduct = async (id) => {
 
 export const filterProduct = async (category, limit) => {
   return await axiosInstance.get(
-    `/products/getproducts?category=${category}&limit=${limit}`,options
+    `/products/getproducts?category=${category}&limit=${limit}`,
+    options
   );
 };
 export const getCart = async (id) => {
@@ -35,6 +36,9 @@ export const getCart = async (id) => {
 };
 
 export const addCart = async (data, id) => {
-  console.log(data);
   return await axiosInstance.post(`/cart/addCart/${id}`, data, options);
+};
+
+export const deleteCart = async (id) => {
+  return await axiosInstance.delete(`/cart/delete/${id}`, options);
 };

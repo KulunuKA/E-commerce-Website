@@ -1,0 +1,253 @@
+.checkOut {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 4rem;
+}
+
+.CO-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 2rem 3rem;
+}
+
+.CO-details {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 610px;
+}
+.CO-details p {
+  color: #5a5a5a;
+  font-weight: 500;
+}
+.CO-details p span {
+  color: #e10a1d;
+}
+
+.CO-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.name {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  position: relative;
+}
+
+.name-input1 label {
+  position: absolute;
+  color: #838080;
+  font-weight: 500;
+  background-color: #fff;
+  top: -10px;
+  padding: 0rem 0.5rem;
+  left: 10px;
+}
+
+.name-input2 label {
+  position: absolute;
+  background-color: #fff;
+  color: #838080;
+  font-weight: 500;
+  top: -10px;
+  padding: 0rem 0.5rem;
+  left: 320px;
+}
+
+.name-input1 input,
+.name-input2 input {
+  padding: 0.8rem 1rem;
+  width: 300px;
+  border-radius: 10px;
+  border: 1px solid #aba8a8;
+}
+.name-input1 input:focus,
+.name-input2 input:focus {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 6px 0px;
+}
+.companyName {
+  position: relative;
+}
+
+.companyName label {
+  position: absolute;
+  top: -12px;
+  left: 10px;
+  padding: 0 0.5rem;
+  background-color: #fff;
+  color: #838080;
+  font-weight: 500;
+}
+
+.companyName input {
+  padding: 0.8rem 1rem;
+  width: 610px;
+  border-radius: 10px;
+  border: 1px solid #aba8a8;
+}
+.companyName input:focus {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 6px 0px;
+}
+.telephone {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.district {
+  position: relative;
+  width: 610px;
+  /* border: 1px solid #dbd8d8; */
+}
+.district label {
+  color: #838080;
+  font-weight: 500;
+}
+.City {
+  position: relative;
+}
+
+.City label {
+  position: absolute;
+  top: -12px;
+  left: 10px;
+  padding: 0 0.5rem;
+  background-color: #fff;
+  color: #838080;
+  font-weight: 500;
+}
+
+.City input {
+  padding: 0.8rem 1rem;
+  width: 610px;
+  border-radius: 10px;
+  border: 1px solid #aba8a8;
+}
+.City input:focus {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 6px 0px;
+}
+.address {
+  position: relative;
+}
+
+.address label {
+  position: absolute;
+  top: -12px;
+  left: 10px;
+  padding: 0 0.5rem;
+  background-color: #fff;
+  color: #838080;
+  font-weight: 500;
+}
+
+.address input {
+  padding: 0.8rem 1rem;
+  width: 610px;
+  border-radius: 10px;
+  border: 1px solid #aba8a8;
+}
+.address input:focus {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 6px 0px;
+}
+.postcode {
+  position: relative;
+}
+.postcode label {
+  position: absolute;
+  top: -12px;
+  left: 10px;
+  padding: 0 0.5rem;
+  background-color: #fff;
+  color: #838080;
+  font-weight: 500;
+}
+.postcode input {
+  padding: 0.8rem 1rem;
+  width: 610px;
+  border-radius: 10px;
+  border: 1px solid #aba8a8;
+}
+.postcode input:focus {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 6px 0px;
+}
+.co-Email {
+  position: relative;
+}
+.co-Email label {
+  position: absolute;
+  top: -12px;
+  left: 10px;
+  padding: 0 0.5rem;
+  background-color: #fff;
+  color: #838080;
+  font-weight: 500;
+}
+.co-Email input {
+  padding: 0.8rem 1rem;
+  width: 610px;
+  border-radius: 10px;
+  border: 1px solid #aba8a8;
+}
+.co-Email input:focus {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 6px 0px;
+}
+.payment {
+  padding: 2rem 1rem;
+  height: 70vh;
+  border: 1px solid #5a5a5a9c;
+}
+.payment p {
+  color: #474444;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.payment td {
+  color: #5a5a5a;
+  font-weight: 500;
+}
+.co-td {
+  width: 300px;
+}
+#total {
+  color: #000;
+}
+.p-method {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0.5rem 0;
+  gap: 30px;
+}
+.p-method label {
+  color: #5a5a5a;
+  font-weight: 500;
+}
+.p-method input:checked {
+  color: #e10a1d;
+}
+.p-method img {
+  width: 200px;
+}
+#visa,
+#koko {
+  width: 100px;
+}
+.payment button {
+  margin-top: 1rem;
+  padding: 0.5rem 2rem;
+  background-color: #5a5a5a;
+  color: #fff;
+  border: 1px solid #5a5a5a;
+  cursor: pointer;
+}
+.payment button:hover {
+  opacity: 0.7;
+}
