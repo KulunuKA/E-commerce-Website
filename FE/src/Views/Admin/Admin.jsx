@@ -1,33 +1,33 @@
 import React, { useState } from "react";
+import { PlusSquare, List } from "lucide-react"; // Lucide icons
 import "./Admin.css";
-import add_product_icon from "../../assets/Product_Cart.svg";
-import list_product_icon from "../../assets/Product_list_icon.svg";
 import AddProduct from "../../Component/AddProduct/AddProduct";
-import ListProduct from "../../Component/ListProduct/ListProduct";
+import ListProduct from "../../Component/ListProduct";
 
 const Admin = () => {
   const [tab, setTab] = useState("addproduct");
+
   return (
     <div className="admin">
-      <div className="sidebar">
-        <p
+      <aside className="sidebar">
+        <button
+          className={`sidebar-item ${tab === "addproduct" ? "active" : ""}`}
           onClick={() => setTab("addproduct")}
-          style={{ textDecoration: "none" }}
         >
-          <div className="sidebar-item">
-            <img src={add_product_icon} alt="" />
-            <p>Add Product</p>
-          </div>
-        </p>
-        <p onClick={() => setTab("list")} style={{ textDecoration: "none" }}>
-          <div className="sidebar-item">
-            <img src={list_product_icon} alt="" />
-            <p>Product List</p>
-          </div>
-        </p>
-      </div>
-
-      {tab === "addproduct" ? <AddProduct /> : <ListProduct />}
+          <PlusSquare size={20} />
+          <span>Add Product</span>
+        </button>
+        <button
+          className={`sidebar-item ${tab === "list" ? "active" : ""}`}
+          onClick={() => setTab("list")}
+        >
+          <List size={20} />
+          <span>Product List</span>
+        </button>
+      </aside>
+      <main className="content">
+        {tab === "addproduct" ? <AddProduct /> : <ListProduct />}
+      </main>
     </div>
   );
 };

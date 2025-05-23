@@ -53,53 +53,56 @@ const ListProduct = () => {
   }, []);
 
   return (
-    <div className="listproduct">
-      <h1>All Products List</h1>
-      {isLoading ? (
-        <Loading size={60}/>
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Image</th>
-              <th>Product Name</th>
-              <th>Gender</th>
-              <th>Category</th>
-              <th>Price</th>
-              <th>Brand</th>
-              <th>Stock</th>
-              <th>Available</th>
+<div className="listproduct">
+  <h1>Product Catalog</h1>
+  {isLoading ? (
+    <Loading size={60} />
+  ) : (
+    <div className="table-container">
+      <table className="product-table">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Brand</th>
+            <th>Stock</th>
+            <th>Available</th>
+          </tr>
+        </thead>
+        <tbody>
+          {allproducts.map((product) => (
+            <tr key={product._id}>
+              <td>
+                <img src={product.images[0]} alt={product.name} className="productImg" />
+              </td>
+              <td>{product.name}</td>
+              <td>{product.gender}</td>
+              <td>{product.category}</td>
+              <td>${product.price}</td>
+              <td>
+                <img src={product.brand} alt="brand" className="brandImg" />
+              </td>
+              <td>{product.stock}</td>
+              <td>
+                <Switch
+                  loading={isLoading}
+                  checked={product.available}
+                  onChange={() =>
+                    handleAvailability(product._id, product.available)
+                  }
+                />
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {allproducts.map((product) => (
-              <tr key={product._id}>
-                <td>
-                  <img src={product.images[0]} alt="" className="productImg" />
-                </td>
-                <td>{product.name}</td>
-                <td>{product.gender}</td>
-                <td>{product.category}</td>
-                <td>{product.price}</td>
-                <td>
-                  <img src={product.brand} alt="" className="productImg" />
-                </td>
-                <td>{product.stock}</td>
-                <td>
-                  <Switch
-                    loading={isLoading}
-                    defaultChecked={product.available}
-                    onChange={() =>
-                      handleAvailability(product._id, product.available)
-                    }
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+          ))}
+        </tbody>
+      </table>
     </div>
+  )}
+</div>
+
   );
 };
 

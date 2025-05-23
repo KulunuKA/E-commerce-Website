@@ -3,10 +3,10 @@ import { registerUser } from "../../APIs/userAPIs";
 import { notification } from "antd";
 import Input from "../../Component/Input";
 import Loading from "../../Component/Loader";
-import Button from "../../Component/Button";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../../Store/user";
+import MyButton from "../../Component/Button";
 
 export default function Register() {
   const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +36,7 @@ export default function Register() {
       try {
         const { data, code, msg } = await registerUser(credentials);
         if (code === 200) {
-        //   navigate("/");
+          //   navigate("/");
           dispatch(setUser(data));
         }
         setIsLoading(false);
@@ -79,7 +79,7 @@ export default function Register() {
           {isLoading ? (
             <Loading size={30} />
           ) : (
-            <Button text={"Register"} height={30} width={150} />
+            <MyButton name={"Register"} width={150} />
           )}
         </div>
 

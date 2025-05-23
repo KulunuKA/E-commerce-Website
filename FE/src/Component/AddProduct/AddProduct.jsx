@@ -1,13 +1,29 @@
 import React, { useState } from "react";
-import "./AddProduct.css";
-import upload_area from "../Assets/upload_area.svg";
-import { notification, Select, Switch } from "antd";
-import { addProduct } from "../../APIs/adminAPIs";
-import { useOneImgUpload } from "../../Hooks/useOneImgUpload";
-import Loading from "../Loader/index";
+import MyInput from "../../Component/input copy";
+import Dropdown from "../../Component/Dropdown";
+import { Switch, Upload, Button, message } from "antd";
+import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
+import MyButton from "../Button";
 
-const AddProduct = () => {
-  const maritals = ["Cotton", "Silk", "Polyester", "Wool", "Denim"];
+const MAX_FILES = 3;
+export default function AddProduct() {
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    images: [],
+    category: "",
+    price: "",
+    brand: "",
+    material: "",
+    gender: "",
+    weight: "",
+    size: "",
+    available: true,
+    stock: 0,
+  });
+  const [fileList, setFileList] = useState([]);
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewVisible, setPreviewVisible] = useState(false);
 
   const categories = {
     Male: [
@@ -38,309 +54,181 @@ const AddProduct = () => {
       "Plus Women Wear",
     ],
   };
-  const [isLoading, setIsLoading] = useState(false);
-  const [uploading, setUploading] = useState(false);
-  const [productDetails, setProductDetails] = useState({
-    name: "",
-    description: "",
-    images: [],
-    category: "",
-    price: "",
-    brand: "",
-    material: "",
-    gender: "",
-    weight: "",
-    size: "",
-    available: true,
-    stock: 0,
-  });
+  const genderOptions = [
+    { label: "Men", value: "men" },
+    { label: "Women", value: "women" },
+    { label: "Unisex", value: "unisex" },
+  ];
 
-  const handleProduct = async (e) => {
-    e.preventDefault();
-    if (!productDetails.name) {
-      notification.error({
-        message: "Name is required",
-      });
-    } else if (!productDetails.description) {
-      notification.error({
-        message: "Description is required",
-      });
-    } else if (!productDetails.price) {
-      notification.error({
-        message: "Price is required",
-      });
-    } else if (!productDetails.brand) {
-      notification.error({
-        message: "Brand is required",
-      });
-    } else if (!productDetails.material) {
-      notification.error({
-        message: "Material is required",
-      });
-    } else if (!productDetails.size) {
-      notification.error({
-        message: "Size is required",
-      });
-    } else if (!productDetails.stock) {
-      notification.error({
-        message: "Stock is required",
-      });
-    } else if (productDetails.images.length === 0) {
-      notification.error({
-        message: "Image is required",
-      });
-    } else {
-      try {
-        setIsLoading(true);
-        const { data, code, msg } = await addProduct(productDetails);
-        if (code === 201) {
-          notification.success({
-            message: "Product added successfully",
-          });
-          setProductDetails({
-            name: "",
-            description: "",
-            images: [],
-            category: "",
-            price: "",
-            brand: "",
-            material: "",
-            gender: "",
-            weight: "",
-            size: "",
-            available: true,
-            stock: 0,
-          }); // clear the form
-        }
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        console.log(error);
-        notification.error({
-          message: error.response.msg || "Failed to add product",
-        });
-      }
+  const handleInputChange = (key) => (e) => {
+    const value = e?.target?.value ?? e;
+    setFormData((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const handleImageChange = ({ fileList }) => {
+    setFormData((prev) => ({ ...prev, images: fileList }));
+  };
+
+  const handleSubmit = () => {
+    console.log("Submitted Product:", formData);
+    message.success("Product submitted successfully");
+  };
+  const getBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
     }
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
   };
 
-  const changeHandler = (filed) => (e) => {
-    setProductDetails({ ...productDetails, [filed]: e.target.value });
+  const handleChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
   };
 
-  const handleBrand = async (file) => {
-    try {
-      setUploading(true);
-      const url = await useOneImgUpload(file);
-      setProductDetails({ ...productDetails, brand: url });
-      setUploading(false);
-    } catch (error) {
-      setUploading(false);
-      notification.error({
-        message: "Failed to upload image",
-      });
-    }
-  };
-
-  const imageHandler = async (e) => {
-    try {
-      const url = await useOneImgUpload(e.target.files[0]);
-      setProductDetails({
-        ...productDetails,
-        images: [...productDetails.images, url],
-      });
-    } catch (error) {
-      notification.error({
-        message: "Failed to upload image",
-      });
-    }
-  };
-
-  let imageInputArray = [];
-
-  for (let i = 0; i < 3; i++) {
-    imageInputArray.push(
-      <div key={i}>
-        <label for="file-input">
-          <img
-            className="addproduct-thumbnail-img"
-            src={
-              productDetails.images[i] ? productDetails.images[i] : upload_area
-            }
-            alt=""
-          />
-        </label>
-        <input
-          onChange={(e) => {
-            imageHandler(e);
-          }}
-          type="file"
-          name="image"
-          id="file-input"
-          hidden
-        />
-      </div>
-    );
-  }
-
+  const uploadButton = (
+    <button
+      style={{ border: 0, background: "none", cursor: "pointer" }}
+      type="button"
+      aria-label="Upload"
+    >
+      <PlusOutlined />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </button>
+  );
   return (
-    <div className="addproduct">
-      <div className="addproduct-itemfield">
-        <p>Name</p>
-        <input
-          type="text"
-          value={productDetails.name}
-          onChange={changeHandler("name")}
-          placeholder="Type here name"
+    <div
+      style={{
+        maxWidth: "800px",
+        margin: "0 auto",
+        padding: "2rem",
+        display: "flex",
+        flexDirection: "column",
+        gap: "24px",
+      }}
+    >
+      <MyInput
+        label="Name"
+        value={formData.name}
+        onChange={handleInputChange("name")}
+        required
+      />
+      <MyInput
+        label="Description"
+        value={formData.description}
+        onChange={handleInputChange("description")}
+        required
+      />
+      <Dropdown
+        label="Gender"
+        options={["Male", "Female", "Kids", "Unisex"].map((marital) => ({
+          value: marital,
+          label: marital,
+        }))}
+        onChange={(e) => {
+          setFormData({ ...formData, gender: e });
+        }}
+        placeholder="Select gender"
+        value={formData.gender}
+      />
+      <Dropdown
+        label="Category"
+        options={categories[formData.gender || "Male"].map((category) => ({
+          value: category,
+          label: category,
+        }))}
+        onChange={(e) => {
+          setFormData({ ...formData, category: e });
+        }}
+        placeholder="Select category"
+        value={formData.category}
+        required
+      />
+
+      <MyInput
+        label="Price"
+        type="number"
+        value={formData.price}
+        onChange={handleInputChange("price")}
+        required
+      />
+
+
+      <MyInput
+        label="Material"
+        value={formData.material}
+        onChange={handleInputChange("material")}
+        placeholder="Cotton, Polyester, etc."
+      />
+
+      <MyInput
+        label="Weight (kg)"
+        type="number"
+        value={formData.weight}
+        onChange={handleInputChange("weight")}
+      />
+      <MyInput
+        label="Size"
+        value={formData.size}
+        onChange={handleInputChange("size")}
+      />
+
+      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <label style={{ fontWeight: "500" }}>Available</label>
+        <Switch
+          checked={formData.available}
+          onChange={(value) =>
+            setFormData((prev) => ({ ...prev, available: value }))
+          }
         />
       </div>
 
+      <MyInput
+        label="Stock"
+        type="number"
+        value={formData.stock}
+        onChange={handleInputChange("stock")}
+      />
+
       <div className="addproduct-itemfield">
-        <p>Description</p>
-        <textarea
-          type="text"
-          value={productDetails.description}
-          onChange={changeHandler("description")}
-          placeholder="description here"
-          maxLength={200}
-        />
-      </div>
-      <div className="addproduct-price">
-        <div className="addproduct-itemfield">
-          <p>Price</p>
-          <input
-            type="text"
-            value={productDetails.price}
-            onChange={changeHandler("price")}
-            placeholder="Type here"
-            min={100}
-          />
+        <p>Brand logo</p>
+        <div className="addproduct-img">
+          <Upload
+            action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+            listType="picture-card"
+            onPreview={handlePreview}
+            onChange={handleChange}
+          >
+            {uploadButton}
+          </Upload>
         </div>
       </div>
 
       <div className="addproduct-itemfield">
-        <p>Brand Logo</p>
-        <label for="file-inputt">
-          {!uploading ? (
-            <img
-              className="addproduct-thumbnail-img"
-              src={productDetails.brand ? productDetails.brand : upload_area}
-              alt=""
-            />
-          ) : (
-            <Loading size={20} />
-          )}
-        </label>
-        <input
-          onChange={(e) => {
-            handleBrand(e.target.files[0]);
-          }}
-          type="file"
-          name="image"
-          id="file-inputt"
-          hidden
-        />
-      </div>
-
-      <div className="addproduct-itemfield">
-        <p>Material</p>
-        <Select
-          placeholder={"Select a material"}
-          options={maritals.map((marital) => ({
-            value: marital,
-            label: marital,
-          }))}
-          onChange={(e) => {
-            setProductDetails({ ...productDetails, material: e });
-          }}
-        />
-      </div>
-
-      <div className="addproduct-itemfield">
-        <p>Product gender</p>
-        <Select
-          placeholder={"Select a gender"}
-          options={["Male", "Female", "Kids", "Unisex"].map((marital) => ({
-            value: marital,
-            label: marital,
-          }))}
-          onChange={(e) => {
-            setProductDetails({ ...productDetails, gender: e });
-          }}
-        />
-      </div>
-
-      <div className="addproduct-itemfield">
-        <p>Category</p>
-        <Select
-          placeholder={"Select a category"}
-          options={categories[productDetails.gender || "Male"].map(
-            (category) => ({
-              value: category,
-              label: category,
-            })
-          )}
-          onChange={(e) => {
-            setProductDetails({ ...productDetails, category: e });
-          }}
-        />
-      </div>
-
-      <div className="addproduct-itemfield">
-        <p>Weight (g)</p>
-        <input
-          type="text"
-          value={productDetails.weight}
-          onChange={changeHandler("weight")}
-          placeholder="Type here"
-        />
-      </div>
-      <div className="addproduct-itemfield">
-        <p>Size</p>
-        <Select
-          placeholder={"Select a size"}
-          options={["S", "M", "L", "XL", "XXL"].map((marital) => ({
-            value: marital,
-            label: marital,
-          }))}
-          onChange={(e) => {
-            setProductDetails({ ...productDetails, size: e });
-          }}
-        />
-      </div>
-
-      <div className="addproduct-itemfield">
-        <p>Available</p>
-        <Switch
-          style={{ width: "100px" }}
-          checkedChildren="Yes"
-          unCheckedChildren="No"
-          defaultChecked
-          onChange={(e) => {
-            setProductDetails({ ...productDetails, available: e });
-          }}
-        />
-      </div>
-
-      <div className="addproduct-itemfield">
-        <p>Stock</p>
-        <input
-          type="text"
-          value={productDetails.stock}
-          onChange={changeHandler("stock")}
-          placeholder="Type here"
-        />
-      </div>
-
-      <div className="addproduct-itemfield">
         <p>Product image(s)</p>
-        <div className="addproduct-img">{imageInputArray}</div>
+        <div className="addproduct-img">
+          <Upload
+            action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+            listType="picture-card"
+            fileList={fileList}
+            onPreview={handlePreview}
+            onChange={handleChange}
+          >
+            {fileList.length >= MAX_FILES ? null : uploadButton}
+          </Upload>
+        </div>
       </div>
 
-      <button className="addproduct-btn" onClick={handleProduct}>
-        {isLoading ? <Loading size={30} /> : "Add Product"}
-      </button>
+      <Button type="primary" size="large" onClick={handleSubmit}>
+        Submit Product
+      </Button>
     </div>
   );
-};
-
-export default AddProduct;
+}

@@ -1,66 +1,82 @@
-/* ListProduct.css */
-
 .listproduct {
   width: 100%;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
+  padding: 30px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  color: #2d3436;
 }
 
 .listproduct h1 {
   text-align: center;
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: #333;
+  font-size: 32px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 30px;
 }
 
-.listproduct table {
+.table-container {
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.product-table {
   width: 100%;
   border-collapse: collapse;
   background-color: #fff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  min-width: 900px;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-.listproduct table th,
-.listproduct table td {
+.product-table th,
+.product-table td {
   text-align: left;
-  padding: 12px;
-  border: 1px solid #ddd;
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+  font-size: 15px;
 }
 
-.listproduct table th {
-  background-color: #f4f4f4;
-  font-weight: bold;
-  color: #555;
+.product-table th {
+  background-color: #f0f2f5;
+  color: #34495e;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px;
 }
 
-.listproduct table tr:nth-child(even) {
+.product-table tr:hover {
   background-color: #f9f9f9;
-}
-
-.listproduct table tr:hover {
-  background-color: #f1f1f1;
-  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .productImg {
-  width: 100px;
-  height: 100px;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #e1e1e1;
+}
+
+.brandImg {
+  width: 50px;
+  height: auto;
   object-fit: contain;
-  border-radius: 4px;
 }
 
-.listproduct table td img {
-  display: inline-block;
-  vertical-align: middle;
-}
+@media (max-width: 768px) {
+  .product-table th,
+  .product-table td {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
 
-.listproduct table td {
-  vertical-align: middle;
-  color: #666;
-}
+  .productImg {
+    width: 50px;
+    height: 50px;
+  }
 
-.listproduct .available img {
-  width: 20px;
-  height: 20px;
+  .brandImg {
+    width: 40px;
+  }
 }

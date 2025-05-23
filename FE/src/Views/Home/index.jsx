@@ -4,12 +4,6 @@ import heroImg1 from "../../assets/hero-6.jpg";
 import heroImg2 from "../../assets/hero-3.jpg";
 import heroImg3 from "../../assets/hero-4.jpg";
 import heroImg4 from "../../assets/hero-5.jpg";
-import delivery from "../../assets/delivery.png";
-import money from "../../assets/money.png";
-import shop from "../../assets/shop.png";
-import exchange from "../../assets/exchange.png";
-import card from "../../assets/card.png";
-import dress from "../../assets/dress.png";
 import cate1 from "../../assets/cate-1.jpg";
 import cate2 from "../../assets/cate-2.jpg";
 import cate3 from "../../assets/cate-3.jpg";
@@ -22,38 +16,15 @@ import sub3 from "../../assets/sub-3.jpg";
 import sub4 from "../../assets/sub-4.jpg";
 import sub5 from "../../assets/sub-5.jpg";
 import sub6 from "../../assets/sub-6.jpg";
+import ServicesSlider from "./ServicesSlider";
+import Benefit from "./benefit";
 
 export default function Home() {
   const heroImg = [heroImg1, heroImg2, heroImg3, heroImg4];
   const [curr, setCurr] = useState(0);
   const [slide, setSlide] = useState(heroImg[curr]);
   const [isErr, setErr] = useState("");
-  const services = [
-    {
-      img: delivery,
-      info: "ISLAND-WIDE DELIVERY",
-    },
-    {
-      img: money,
-      info: "CASH ON DELIVERY",
-    },
-    {
-      img: shop,
-      info: "ISLAND-WIDE STORE",
-    },
-    {
-      img: exchange,
-      info: "EXCHANGE FROM ANY STORE",
-    },
-    {
-      img: card,
-      info: "SECURE PAYMENTS",
-    },
-    {
-      img: dress,
-      info: "UNLIMITED UNIQUE DESIGN",
-    },
-  ];
+
   const categories = [
     {
       img: cate1,
@@ -142,18 +113,7 @@ export default function Home() {
       </div>
 
       {/* Services */}
-      <div className="services">
-        {services.map((service, index) => (
-          <div className="service" key={index}>
-            <div className="serviceImg">
-              <img src={service.img} alt="delivery" />
-            </div>
-            <div className="serviceInfo">
-              <p>{service.info}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+      <ServicesSlider />
 
       {/* Main Category */}
       <div className="main-Cate">
@@ -217,6 +177,8 @@ export default function Home() {
           </div>
         ))}
       </div>
+
+      <Benefit />
     </div>
   );
 }

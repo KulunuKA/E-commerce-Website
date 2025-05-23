@@ -4,7 +4,6 @@ import "./style.css";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/logo-0.png";
 import loginImg from "../../assets/login/login.jpg";
-import Button from "../../Component/Button";
 import Input from "../../Component/Input";
 import { loginUser } from "../../APIs/userAPIs";
 import { notification } from "antd";
@@ -12,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../Store/user";
 import Loading from "../../Component/Loader";
 import Register from "./register";
+import MyButton from "../../Component/Button";
 
 export default function Login() {
   const [tab, setTab] = useState(() => {
@@ -115,7 +115,7 @@ export default function Login() {
                   {isLoading ? (
                     <Loading size={30} />
                   ) : (
-                    <Button text={"Login"} height={30} width={150} />
+                    <MyButton name={"Login"} width={150} />
                   )}
                 </div>
                 <p>

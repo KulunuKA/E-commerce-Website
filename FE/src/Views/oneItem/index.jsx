@@ -24,7 +24,7 @@ export default function OneItem() {
     { value: "20", label: "20" },
   ];
   const sizes = ["S", "M", "L", "XL", "XXL"];
-  const [showSelect, setShowSelect] = useState(options[0]);
+  const [size, setSize] = useState("");
   const [isLoading, setIsLoading] = useState({
     fuc1: true,
     fuc2: true,
@@ -37,9 +37,6 @@ export default function OneItem() {
   const [askLogin, setAskLogin] = useState(false);
   const dispatch = useDispatch();
 
-  function selectOne(e) {
-    setShowSelect(e);
-  }
   function countCal() {
     setQuantity((quantity = quantity + 1));
   }
@@ -91,6 +88,12 @@ export default function OneItem() {
     setBtnLoading(true);
     if (!reduxUser.email) {
       setAskLogin(true);
+      return;
+    } else if (!size) {
+      notification.error({
+        message: "Size is required",
+      });
+      setBtnLoading(false);
       return;
     }
 
@@ -154,7 +157,7 @@ export default function OneItem() {
 
           <div className="productDetails">
             <h3>{item.name}</h3>
-            <p className="price">{item.price}</p>
+            <p className="price">LKR {item?.price?.toFixed(2)}</p>
             <p>{item.description}</p>
             <p className="note">
               *Product image may differ from actual due to photographic
@@ -183,13 +186,14 @@ export default function OneItem() {
             <div className="size">
               <p>Size</p>
               <Select
-                defaultValue={sizes[0]}
+                style={{ width: "30%" }}
+                placeholder={"Select Size"}
                 size="large"
                 options={sizes.map((e) => ({
                   value: e,
                   label: e,
                 }))}
-                onChange={(e) => selectOne({ value: e.label })}
+                onChange={(e) => setSize(e)}
               />
             </div>
 
