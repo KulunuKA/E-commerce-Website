@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../../Store/user";
 import MyButton from "../../Component/Button";
+import MyInput from "../../Component/input copy";
 
 export default function Register() {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,37 +16,47 @@ export default function Register() {
     email: "",
     password: "",
   });
-  const [err, setErr] = useState({
-    email: "",
-    password: "",
-  });
-
+  const [err, setErr] = useState("");
   const dispatch = useDispatch();
+
+  const validateForm = (formData) => {
+    const newErr = {};
+
+    if (!formData.email) {
+      newErr.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErr.email = "Email is invalid";
+    }
+
+    if (!formData.password) {
+      newErr.password = "Password is required";
+    } else if (formData.password.length < 6) {
+      newErr.password = "Password must be at least 6 characters";
+    }
+
+    setErr(newErr);
+    return Object.keys(newErr).length === 0;
+  };
   // Create User
   const handelSubmit = async (event) => {
     event.preventDefault();
+    if (!validateForm(credentials)) {
+      return;
+    }
     setIsLoading(true);
-    if (!credentials.email && !credentials.password) {
-      setErr({ email: "Email is required" });
-      setErr({ password: "Password is required" });
-    } else if (!credentials.email) {
-      setErr({ email: "Email is required" });
-    } else if (!credentials.password) {
-      setErr({ password: "Password is required" });
-    } else {
-      try {
-        const { data, code, msg } = await registerUser(credentials);
-        if (code === 200) {
-          //   navigate("/");
-          dispatch(setUser(data));
-        }
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        notification.error({
-          message: error?.response?.data?.msg || "Registration Failed",
-        });
+
+    try {
+      const { data, code, msg } = await registerUser(credentials);
+      if (code === 0) {
+        navigate("/");
+        dispatch(setUser(data));
       }
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      notification.error({
+        message: error?.response?.data?.msg || "Registration Failed",
+      });
     }
   };
 
@@ -57,30 +68,33 @@ export default function Register() {
   return (
     <form className="login-form" onSubmit={handelSubmit}>
       <div className="login">
-        <Input
-          type="email"
+        <MyInput
           label={"Email"}
-          placeholder="Example@gmail.com"
           value={credentials.email}
           onChange={handleInput("email")}
-          err={err.email}
+          error={err.email}
+          errorMessage={err.email}
+          type="email"
+          placeholder="enter your email"
         />
 
-        <Input
-          type="password"
+        <MyInput
           label={"Password"}
-          placeholder="password"
           value={credentials.password}
           onChange={handleInput("password")}
-          err={err.password}
+          error={err.password}
+          errorMessage={err.password}
+          type="password"
+          placeholder="enter your password"
         />
 
         <div className="btn">
-          {isLoading ? (
-            <Loading size={30} />
-          ) : (
-            <MyButton name={"Register"} width={150} />
-          )}
+          <MyButton
+            name={"Register"}
+            width={150}
+            loading={isLoading}
+            color="rgba(225, 10, 29, 0.95)"
+          />
         </div>
 
         <p>
