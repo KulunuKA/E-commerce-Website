@@ -71,7 +71,7 @@ export default function Home() {
   const fetchItems = async () => {
     try {
       const { data, code, msg } = await fetchHomeData();
-      if (code === 200) {
+      if (code === 0) {
         setItem(data);
       } else {
         console.log(msg);

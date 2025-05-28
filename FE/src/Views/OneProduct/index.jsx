@@ -12,6 +12,7 @@ import { notification, Select } from "antd";
 import { setCartItemCount, userData } from "../../Store/user";
 import { useDispatch, useSelector } from "react-redux";
 import SignInModal from "../../Component/SignInModal";
+import MyButton from "../../Component/Button";
 
 export default function OneItem() {
   const params = useParams();
@@ -53,7 +54,7 @@ export default function OneItem() {
   const fetchData = async () => {
     try {
       const { data, code, msg } = await getOneProduct(id);
-      if (code === 200) {
+      if (code === 0) {
         setItem(data);
       }
       setIsLoading({ ...isLoading, fuc1: false });
@@ -65,8 +66,9 @@ export default function OneItem() {
 
   const fetchSimilar = async () => {
     try {
+      console.log("Fetching similar products for category:", item.category);
       const { data, code, msg } = await filterProduct(item.category, 4);
-      if (code === 200) {
+      if (code === 0) {
         setSimilar(data);
       }
       setIsLoading({ ...isLoading, fuc2: false });
@@ -78,9 +80,11 @@ export default function OneItem() {
 
   useEffect(() => {
     fetchData();
-
-    if (item.category) fetchSimilar();
   }, []);
+
+  useEffect(() => {
+    if (item.category) fetchSimilar();
+  }, [item.category]);
 
   //Add product to cart
   const handleCart = async (event) => {
@@ -134,72 +138,67 @@ export default function OneItem() {
   };
 
   return (
-    <div className="product">
+    <div className="product-page">
       {isLoading.fuc1 ? (
         <Loading size={60} />
       ) : (
-        <div className="product-container">
-          <div className="productImages">
-            <div className="p-sub-img">
+        <div className="product-content">
+          <div className="product-images">
+            <div className="thumbnail-list">
               {item?.images.map((url, index) => (
                 <img
                   key={index}
                   src={url}
-                  alt={`img ${index}`}
+                  alt={`Product ${index}`}
                   onClick={changeImg}
+                  className="thumbnail"
                 />
               ))}
             </div>
-            <div className="p-main-img">
-              <img src={item.images[0]} alt="main product" id="imageBox" />
+            <div className="main-image">
+              <img src={item.images[0]} alt="Main Product" id="imageBox" />
             </div>
           </div>
 
-          <div className="productDetails">
-            <h3>{item.name}</h3>
-            <p className="price">LKR {item?.price?.toFixed(2)}</p>
-            <p>{item.description}</p>
-            <p className="note">
-              *Product image may differ from actual due to photographic
-              lighting*
+          <div className="product-info">
+            <h3 className="product-title">{item.name}</h3>
+            <p className="product-price">LKR {item?.price?.toFixed(2)}</p>
+            <p className="product-description">{item.description}</p>
+            <p className="image-note">
+              *Product image may differ due to photographic lighting*
             </p>
 
-            <div className="brand">
-              <p>Brand:</p>
-              <img src={item.brand} alt="Brand logo" />
+            <div className="brand-info">
+              <span>Brand:</span>
+              <img src={item.brand} alt="Brand" />
             </div>
 
             <p>
-              <span>Material: </span>
-              {item.material}
+              <strong>Material:</strong> {item.material}
             </p>
             <p>
-              <span>Weight: </span>
-              {item.weight}
+              <strong>Weight:</strong> {item.weight}
             </p>
 
-            <div className="offer">
+            <div className="payment-offer">
               <p>or 3 installments of {item.price} with</p>
-              <img src={pay} alt="payment option" />
+              <img src={pay} alt="Installment Payment" />
             </div>
 
-            <div className="size">
-              <p>Size</p>
+            <div className="product-size">
+              <label>Size</label>
               <Select
-                style={{ width: "30%" }}
-                placeholder={"Select Size"}
+                className="size-selector"
+                placeholder="Select Size"
                 size="large"
-                options={sizes.map((e) => ({
-                  value: e,
-                  label: e,
-                }))}
+                options={sizes.map((e) => ({ value: e, label: e }))}
                 onChange={(e) => setSize(e)}
               />
             </div>
 
-            <div className="addProduct">
-              <div className="quantity-control">
-                <p id="pieces">{quantity}</p>
+            <div className="purchase-actions">
+              <div className="quantity-selector">
+                <p id="quantity">{quantity}</p>
                 <p onClick={countCal}>
                   <i className="bi bi-plus"></i>
                 </p>
@@ -207,33 +206,29 @@ export default function OneItem() {
                   <i className="bi bi-dash"></i>
                 </p>
               </div>
-              <div className="actions">
-                <button onClick={handleCheckout}>BUY</button>
-                <button type="submit" onClick={handleCart}>
-                  {btnLoading ? <Loading size={20} /> : "ADD TO CART"}
-                </button>
+              <div className="action-buttons">
+                <MyButton name="BUY" onClick={handleCheckout} color="#ED1C24" />
+                <MyButton
+                  name="ADD TO CART"
+                  onClick={handleCart}
+                  loading={btnLoading}
+                />
               </div>
             </div>
           </div>
         </div>
       )}
 
-      <div className="similar-products">
-        <div className="sub-headers">
-          <h1>Similar Products</h1>
-        </div>
-
+      <div className="related-products">
+        <h2 className="section-title">Similar Products</h2>
         {isLoading.fuc2 ? (
           <Loading size={60} />
         ) : (
-          <div className="newA-grid">
+          <div className="product-grid">
             {similar?.map((e) => (
               <ProductCard
-                id={e._id}
-                key={e._id}
-                mainImg={e.mainImg}
-                mainTitle={e.mainTitle}
-                addPrice={e.addPrice}
+                key={e.id}
+                {...e}
               />
             ))}
           </div>

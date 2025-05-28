@@ -1,14 +1,16 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./Views/Home";
 import Login from "./Views/LoginSignup";
-import Layout from "./Component/Layout";
-import OneItem from "./Views/oneItem/index";
+import Layout from "./Component/Layouts/Layout";
+import OneItem from "./Views/OneProduct";
 import AllClothing from "./Views/AllClothing";
 import CartPage from "./Views/Cart/index";
-import Admin from "./Views/Admin/Admin";
 import AdminLogin from "./Views/Admin Login";
 import RequireRoute from "./Route/requireRoute";
 import CheckOut from "./Views/Checkout/index";
+import AdminLayout from "./Component/Layouts/AdminLayout";
+import AddProduct from "./Views/AddProduct";
+import ListProduct from "./Views/ListProduct";
 
 function App() {
   return (
@@ -28,11 +30,16 @@ function App() {
             <Route path="/checkout" element={<CheckOut />} />
           </Route>
 
-          {/* Protected route */}
-          <Route element={<RequireRoute allowedRoles={"Admin"} />}>
-            <Route path="/dashboard" element={<Admin />} />
-          </Route>
+         
         </Route>
+
+         {/* Protected route */}
+          <Route element={<RequireRoute allowedRoles={"Admin"} />}>
+            <Route path="/dashboard" element={<AdminLayout />}>
+              <Route path="add-product" element={<AddProduct />} />
+              <Route path="product-list" element={<ListProduct />} />
+            </Route>
+          </Route>
       </Routes>
     </>
   );

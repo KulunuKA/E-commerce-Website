@@ -1,5 +1,6 @@
 package com.fashionhub.server.model;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,7 +10,6 @@ import java.util.List;
 @Getter
 @Setter
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Document(collection = "users")
@@ -18,8 +18,12 @@ public class User {
     @Id
     private String id;
 
-    private String role = "Customer"; // default value
+    private String role = "Customer";
+
+    @NotBlank(message = "Email is required")
     private String email;
+
+    @NotBlank(message = "Password is required")
     private String password;
 
     private int cartItemCount = 0;
@@ -44,7 +48,11 @@ public class User {
     }
 
     public void setRole(String role) {
-        this.role = role;
+        if (role == null) {
+            this.role = "Customer";
+        } else {
+            this.role = role;
+        }
     }
 
     public void setEmail(String email) {

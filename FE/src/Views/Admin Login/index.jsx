@@ -27,7 +27,7 @@ export default function AdminLogin() {
     try {
       const { data, code, msg } = await login(credentials);
 
-      if (code == 200) {
+      if (code == 0) {
         navigate("/dashboard", { replace: true });
         dispatch(setUser(data));
       } else {

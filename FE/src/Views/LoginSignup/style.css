@@ -1,5 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
-
+:root {
+    --main-them-color: #ED1C24;
+    --dark-theme-color: #C90F16;
+    --main-font-color: #5A5A5A;
+    --dark-gray: #464646;
+    --off-white-bg: #F8F8F8;
+    --dark-bg: #363636;
+    --light-gray: #BFBFBF;
+    --border-color: #CFCFCF;
+    --gift-wrap: #FFE8E8;
+    --discount-color: #109F64;
+    --light-gray-off: #EBEBEB;
+}
 /* Main login page container */
 .loginPage {
   width: 100%;

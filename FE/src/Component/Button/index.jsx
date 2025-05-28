@@ -31,7 +31,7 @@ export default function MyButton({
         width: width,
         color: "white",
         fontSize: loading && 20,
-        borderRadius: 24,
+        borderRadius: 24 ,
         marginTop: mt,
         opacity: disabled ? 0.5 : 1,
       }}

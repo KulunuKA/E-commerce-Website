@@ -14,12 +14,20 @@ export const login = async (data) => {
 };
 
 export const addProduct = async (data) => {
-  return await axiosInstance.post("/admin/addProduct", data, options);
+  return await axiosInstance.post("/admin/addproduct", data, options);
 };
 
 export const getProducts = async () => {
-  return await axiosInstance.get("/admin/getproducts", options);
+  return await axiosInstance.get("/products", options);
 };
+
+export const updateProducts = async (id, data) => {
+  return await axiosInstance.put(`/admin/updateproduct/${id}`, data, options);
+};
+
+export const deleteProduct = async (id) => {
+  return await axiosInstance.delete(`/admin/deleteproduct/${id}`, options);
+}
 
 export const updateAvailabilityProduct = async (id, data) => {
   return await axiosInstance.put(`/admin/updateProduct/${id}`, data, options);
