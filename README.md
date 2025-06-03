@@ -36,7 +36,7 @@ Welcome to the **Fashion Hub** repository! This project is an e-commerce platfor
 ## Technologies Used
 
 - **Frontend**: React.js, Redux, Ant Design, CSS
-- **Backend**: Node.js, Express.js
+- **Backend**: Spring boot
 - **Database**: MongoDB
 - **Authentication**: JWT-based authentication
 
