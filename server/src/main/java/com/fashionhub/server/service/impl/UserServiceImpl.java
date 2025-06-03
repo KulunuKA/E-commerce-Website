@@ -2,6 +2,7 @@ package com.fashionhub.server.service.impl;
 
 import com.fashionhub.server.exception.EmailAlreadyExistsException;
 import com.fashionhub.server.exception.InvalidCredentialsException;
+import com.fashionhub.server.exception.NotFoundException;
 import com.fashionhub.server.model.User;
 import com.fashionhub.server.repository.UserRepository;
 import com.fashionhub.server.service.UserService;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -22,28 +24,42 @@ public class UserServiceImpl implements UserService {
     @Override
     public User loginUser(User userInput) {
 
-            String email = userInput.getEmail();
-            User existingUser =  userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+        String email = userInput.getEmail();
+        User existingUser = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
 
-            if(!encoder.matches(userInput.getPassword(),existingUser.getPassword())){
-                throw new InvalidCredentialsException("Invalid credentials");
-            }
+        if (!encoder.matches(userInput.getPassword(), existingUser.getPassword())) {
+            throw new InvalidCredentialsException("Invalid credentials");
+        }
 
-            return existingUser;
+        return existingUser;
 
 
     }
 
     @Override
-    public User addUser(User user){
-        try{
+    public User addUser(User user) {
+        try {
             String encodedPassword = encoder.encode(user.getPassword());
             user.setPassword(encodedPassword);
 
-            return  userRepository.save(user);
-        }catch (DuplicateKeyException ex) {
-            throw  new EmailAlreadyExistsException("Email already exists");
+            return userRepository.save(user);
+        } catch (DuplicateKeyException ex) {
+            throw new EmailAlreadyExistsException("Email already exists");
         }
+
+    }
+
+    public List<String> addToCart(String id, List<String> product_id) {
+        User user =
+                userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
+
+        user.setCart_item_ids(product_id);
+
+        List<String> ids = user.getCart_item_ids();
+
+        userRepository.save(user);
+
+        return ids;
 
     }
 }

@@ -54,5 +54,13 @@ public class UserController {
 
     }
 
+    @PutMapping("/addtocart/{id}")
+    public ResponseEntity<ApiResponse<List<String>>> addToCart(@PathVariable String id,
+                                                    @RequestBody List<String> pid){
+        List<String> pids = userService.addToCart(id,pid);
+
+        return ResponseEntity.ok(new ApiResponse<>(pids, "Successfully added!",
+                0));
+    }
 
 }

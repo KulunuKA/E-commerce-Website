@@ -9,12 +9,12 @@ import java.util.List;
 
 @Getter
 @Setter
-@Data
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Document(collection = "users")
-
 public class User {
+
     @Id
     private String id;
 
@@ -26,14 +26,13 @@ public class User {
     @NotBlank(message = "Password is required")
     private String password;
 
-    private int cartItemCount = 0;
+    private List<String> cart_item_ids;
 
     private List<Token> tokens;
 
-    public String getEmail() {
-        return this.email;
+    public void setRole(String role) {
+        this.role = (role == null) ? "Customer" : role;
     }
-
 
     public String getId() {
         return id;
@@ -43,16 +42,8 @@ public class User {
         this.id = id;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        if (role == null) {
-            this.role = "Customer";
-        } else {
-            this.role = role;
-        }
+    public String getEmail() {
+        return email;
     }
 
     public void setEmail(String email) {
@@ -67,20 +58,16 @@ public class User {
         this.password = password;
     }
 
-    public int getCartItemCount() {
-        return cartItemCount;
+    public List<String> getCart_item_ids() {
+        return cart_item_ids;
     }
 
-    public void setCartItemCount(int cartItemCount) {
-        this.cartItemCount = cartItemCount;
+    public void setCart_item_ids(List<String> cart_item_ids) {
+        this.cart_item_ids = cart_item_ids;
     }
 
-    public List<Token> getTokens() {
-        return tokens;
-    }
-
-    public void setTokens(List<Token> tokens) {
-        this.tokens = tokens;
+    public String getRole() {
+        return role;
     }
 
     @Data

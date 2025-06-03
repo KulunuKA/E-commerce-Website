@@ -92,6 +92,7 @@ export default function OneItem() {
     setBtnLoading(true);
     if (!reduxUser.email) {
       setAskLogin(true);
+      setBtnLoading(false);
       return;
     } else if (!size) {
       notification.error({
@@ -226,10 +227,7 @@ export default function OneItem() {
         ) : (
           <div className="product-grid">
             {similar?.map((e) => (
-              <ProductCard
-                key={e.id}
-                {...e}
-              />
+              <ProductCard key={e.id} {...e} />
             ))}
           </div>
         )}
