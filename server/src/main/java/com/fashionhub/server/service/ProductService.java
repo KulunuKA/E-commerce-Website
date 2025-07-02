@@ -8,5 +8,5 @@ public interface ProductService {
     List<Product> getAllProducts(String gender,String category,int limit);
     Product getProductById(String id);
     List<String> autocompleteSuggestions(String keyword);
-
+    List<Product>  getProductsByIds(List<String> ids);
 }

@@ -27,8 +27,6 @@ public class User {
     @NotBlank(message = "Password is required")
     private String password;
 
-    private List<String> cart_item_ids;
-
     private List<Token> tokens;
 
     public void setRole(String role) {
@@ -59,13 +57,6 @@ public class User {
         this.password = password;
     }
 
-    public List<String> getCart_item_ids() {
-        return cart_item_ids;
-    }
-
-    public void setCart_item_ids(List<String> cart_item_ids) {
-        this.cart_item_ids = cart_item_ids;
-    }
 
     public String getRole() {
         return role;

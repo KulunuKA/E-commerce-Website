@@ -1,6 +1,7 @@
 package com.fashionhub.server.controller;
 
 import com.fashionhub.server.model.Product;
+import com.fashionhub.server.model.ProductIdRequest;
 import com.fashionhub.server.service.ProductService;
 import com.fashionhub.server.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,14 @@ public class ProductsController {
     public ResponseEntity<ApiResponse<Product>> getProductById(@PathVariable String id) {
         Product product = productService.getProductById(id);
         return ResponseEntity.ok(new ApiResponse<>(product, "Successfully fetched data", 0));
+    }
+
+    @PostMapping("/byids")
+    public ResponseEntity<ApiResponse<List<Product>>> getProductByIds(@RequestBody ProductIdRequest ids) {
+        List<Product> products =
+                productService.getProductsByIds(ids.getProduct_ids());
+        return ResponseEntity.ok(new ApiResponse<>(products, "Successfully " +
+                "fetched data", 0));
     }
 
     @GetMapping("/autocomplete")

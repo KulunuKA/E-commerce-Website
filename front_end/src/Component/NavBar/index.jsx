@@ -2,7 +2,7 @@ import React from "react";
 import "./style.css";
 import { useState, useEffect } from "react";
 import logo from "../../assets/logo-0.png";
-import { userData } from "../../Store/user";
+import { cartItems, userData } from "../../Store/user";
 import { useSelector } from "react-redux";
 import { Search } from "lucide-react";
 import { autoCompleteProduct } from "../../APIs/userAPIs";
@@ -294,10 +294,10 @@ export default function NavBar() {
   );
   const [suggestions, setSuggestions] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+
   const reduxUser = useSelector(userData);
-  console.log("Redux User Data:", reduxUser);
-  const count = reduxUser?.cart_item_ids?.length || 0;
-  
+  const reduxCart = useSelector(cartItems);
+  const count = reduxCart?.items?.length || 0;
 
   const fetchSuggestions = async (keyword) => {
     try {
@@ -348,7 +348,11 @@ export default function NavBar() {
                       {suggestions.map((item, index) => (
                         <li key={index}>
                           <Search color="#333" />
-                          <a href={`/products/${item.toLowerCase().replace(" ", "-")}`}>
+                          <a
+                            href={`/products/${item
+                              .toLowerCase()
+                              .replace(" ", "-")}`}
+                          >
                             {item}
                           </a>
                         </li>

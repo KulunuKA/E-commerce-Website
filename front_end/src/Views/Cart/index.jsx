@@ -3,28 +3,30 @@ import "./style.css";
 import CheckOutProcess from "../../Component/CheckOutProcess/index";
 import Loading from "../../Component/Loader/index";
 import { deleteCart, getCart } from "../../APIs/userAPIs";
-import { removeCartItemCount, userData } from "../../Store/user";
+import { cartItems, removeCartItem, userData } from "../../Store/user";
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteOutlined } from "@ant-design/icons";
 import ErrorDisplay from "../../Component/ErrorDisplay";
-import { notification } from "antd";
+import { Modal, notification } from "antd";
 import { useNavigate } from "react-router-dom";
 
 export default function CartPage() {
-  const [cart, setCart] = useState([]);
   const reduxUser = useSelector(userData);
   const id = reduxUser.id;
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const [isError, setIsError] = useState("");
   const navigate = useNavigate();
+  const reduxCart = useSelector(cartItems);
+  const cart_id = reduxCart.id;
+  const [cart, setCart] = useState(reduxCart.items || []);
 
   const getCartIDs = async () => {
     try {
       setIsLoading(true);
       setIsError("");
       const { data, msg, code } = await getCart(id);
-      if (code === 200) {
+      if (code === 0) {
         setCart(data);
       }
       setIsLoading(false);
@@ -34,16 +36,18 @@ export default function CartPage() {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (productId) => {
     try {
       setIsError("");
-      const { data, msg, code } = await deleteCart(id);
-      if (code === 200) {
+      const { data, msg, code } = await deleteCart(cart_id, productId);
+      if (code === 0) {
         notification.success({
-          message: "Deleted!",
+          message: "Item removed from cart successfully!",
         });
-        dispatch(removeCartItemCount(data.items[0].quantity));
-        getCartIDs();
+        setCart((prevCart) =>
+          prevCart.filter((item) => item.productId !== productId)
+        );
+        dispatch(removeCartItem(data));
       } else {
         notification.error({
           message: "Try again!",
@@ -56,10 +60,6 @@ export default function CartPage() {
       });
     }
   };
-
-  useEffect(() => {
-    getCartIDs();
-  }, []);
 
   return (
     <>
@@ -86,38 +86,42 @@ export default function CartPage() {
                 </tr>
               </thead>
               <tbody>
-                {cart
-                  ?.filter((item) => item.status === "active")
-                  .map((item) =>
-                    item.items.map((product) => (
-                      <tr key={product.id}>
-                        <td>
-                          <img
-                            src={product.image}
-                            alt="product"
-                            className="cart-item-img"
-                          />
-                        </td>
-                        <td>{product?.name?.toLowerCase()}</td>
-                        <td>LKR {product?.price?.toFixed(2)}</td>
-                        <td>{product.quantity}</td>
-                        <td>
-                          LKR {(product.price * product.quantity).toFixed(2)}
-                        </td>
-                        <td>
-                          <DeleteOutlined
-                            twoToneColor="#52c41a"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => handleDelete(item._id)}
-                          />
-                        </td>
-                      </tr>
-                    ))
-                  )}
+                {cart.map((item) => (
+                  <tr key={item.productId}>
+                    <td>
+                      <img
+                        src={item.image}
+                        alt="product"
+                        className="cart-item-img"
+                      />
+                    </td>
+                    <td>{item.name}</td>
+                    <td>LKR {item?.price?.toFixed(2)}</td>
+                    <td>{item.quantity}</td>
+                    <td>LKR {(item.price * item.quantity).toFixed(2)}</td>
+                    <td>
+                      <DeleteOutlined
+                        style={{ cursor: "pointer", color: "red" }}
+                        onClick={() => {
+                          Modal.confirm({
+                            title: "Are you sure you want to delete this item?",
+                            onOk: () => handleDelete(item.productId),
+                            onCancel: () => console.log("Cancelled"),
+                          });
+                        }}
+                      />
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
             <div className="cart-checkOut">
-              <button className="checkout-btn" onClick={()=>navigate("/checkout")}>CHECKOUT</button>
+              <button
+                className="checkout-btn"
+                onClick={() => navigate("/checkout")}
+              >
+                CHECKOUT
+              </button>
             </div>
           </div>
         )}

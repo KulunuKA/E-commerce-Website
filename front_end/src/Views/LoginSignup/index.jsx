@@ -1,14 +1,14 @@
 //Login Page
 import React, { useEffect, useState } from "react";
 import "./style.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo-0.png";
 import loginImg from "../../assets/login/login.jpg";
 import Input from "../../Component/Input";
-import { loginUser } from "../../APIs/userAPIs";
+import { getCart, loginUser } from "../../APIs/userAPIs";
 import { notification } from "antd";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../Store/user";
+import { setCartItem, setUser } from "../../Store/user";
 import Loading from "../../Component/Loader";
 import Register from "./register";
 import MyButton from "../../Component/Button";
@@ -27,6 +27,8 @@ export default function Login() {
   });
   const [err, setErr] = useState("");
   const dispatch = useDispatch();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const handleInput = (field) => (e) => {
     setCredentials({ ...credentials, [field]: e.target.value });
@@ -63,8 +65,12 @@ export default function Login() {
     try {
       const { data, code, msg } = await loginUser(credentials);
       if (code === 0) {
-        dispatch(setUser(data));
-        navigate("/");
+        const { data: cart, code: cartCode } = await getCart(data.id);
+        if (cartCode === 0) {
+          dispatch(setUser(data));
+          dispatch(setCartItem(cart));
+          navigate(from, { replace: true });
+        }
       }
       setIsLoading(false);
     } catch (error) {

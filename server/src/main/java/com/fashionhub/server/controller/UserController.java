@@ -1,7 +1,10 @@
 package com.fashionhub.server.controller;
 
+import com.fashionhub.server.dto.AddToCartRequest;
 import com.fashionhub.server.exception.EmailAlreadyExistsException;
 import com.fashionhub.server.exception.InvalidCredentialsException;
+import com.fashionhub.server.model.Cart;
+import com.fashionhub.server.model.CartItem;
 import com.fashionhub.server.model.ProductIdRequest;
 import com.fashionhub.server.model.User;
 import com.fashionhub.server.service.UserService;
@@ -55,13 +58,29 @@ public class UserController {
 
     }
 
-    @PutMapping("/addtocart/{id}")
-    public ResponseEntity<ApiResponse<String>> addToCart(@PathVariable String id,
-                                                    @RequestBody ProductIdRequest product_id){
-        String pid = userService.addToCart(id,product_id.getProduct_id());
+    @PostMapping("/cart/{id}")
+    public ResponseEntity<ApiResponse<CartItem>> addToCart(@PathVariable String id,
+                                                    @RequestBody CartItem cart){
+        CartItem cartItem = userService.addToCart(id,cart);
 
-        return ResponseEntity.ok(new ApiResponse<>(pid, "Successfully added!",
+        return ResponseEntity.ok(new ApiResponse<>(cartItem, "Successfully added!",
                 0));
     }
 
+    @GetMapping("/cart/{id}")
+    public ResponseEntity<ApiResponse<Cart>> getCart(@PathVariable String id){
+        Cart cartItem = userService.getCartById(id);
+
+        return ResponseEntity.ok(new ApiResponse<>(cartItem, "Successfully added!",
+                0));
+    }
+
+    @DeleteMapping("/cart/{id}/{productId}")
+    public ResponseEntity<ApiResponse<String>> removeFromCart(@PathVariable String id,@PathVariable String productId){
+        String deleteId = userService.removeFromCart(id,productId);
+
+        return ResponseEntity.ok(new ApiResponse<>(deleteId, "Successfully " +
+                "removed!",
+                0));
+    }
 }

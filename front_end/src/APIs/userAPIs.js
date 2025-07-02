@@ -37,13 +37,13 @@ export const autoCompleteProduct = async (keyword) => {
 };
 
 export const getCart = async (id) => {
-  return await axiosInstance.get(`/cart/getCart/${id}`, options);
+  return await axiosInstance.get(`/users/cart/${id}`, options);
 };
 
 export const addCart = async (data, id) => {
-  return await axiosInstance.put(`/users/addtocart/${id}`, data, options);
+  return await axiosInstance.post(`/users/cart/${id}`, data, options);
 };
 
-export const deleteCart = async (id) => {
-  return await axiosInstance.delete(`/users/deletecart/${id}`, options);
+export const deleteCart = async (id, productId) => {
+  return await axiosInstance.delete(`/users/cart/${id}/${productId}`, options);
 };

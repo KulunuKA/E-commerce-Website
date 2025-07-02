@@ -1,7 +1,6 @@
 //One Item view page
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import "./style.css";
 import { useState } from "react";
 import { addCart, filterProduct, getOneProduct } from "../../APIs/userAPIs";
@@ -9,7 +8,7 @@ import pay from "../../assets/pay.png";
 import ProductCard from "../../Component/ProductCard";
 import Loading from "../../Component/Loader";
 import { notification, Select } from "antd";
-import { setCartItemCount, userData } from "../../Store/user";
+import { setCartItems, userData } from "../../Store/user";
 import { useDispatch, useSelector } from "react-redux";
 import SignInModal from "../../Component/SignInModal";
 import MyButton from "../../Component/Button";
@@ -102,16 +101,24 @@ export default function OneItem() {
     }
 
     try {
-      const product_id = id;
+      const cart_item = {
+        productId: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: quantity,
+        size: size,
+        image: item.images[0],
+      };
 
-      const { data, code, msg } = await addCart({product_id}, reduxUser.id);
+      const { data, code, msg } = await addCart(cart_item, reduxUser.id);
 
       if (code === 0) {
+        console.log(data)
         notification.success({
           message: "Product added to cart successfully",
         });
 
-        dispatch(setCartItemCount(data));
+        dispatch(setCartItems(data));
       }
       setBtnLoading(false);
     } catch (error) {

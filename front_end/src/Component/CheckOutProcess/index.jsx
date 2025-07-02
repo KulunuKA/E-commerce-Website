@@ -18,7 +18,7 @@ export default function CheckOutProcess() {
   return (
     <div className="process">
       {steps.map((step, index) => (
-        <React.Fragment key={step.path}>
+        <React.Fragment key={index}>
           <div className="process-step">
             <div
               className={`process-img ${isActive(step.path) ? "active" : ""}`}
