@@ -7,5 +7,5 @@ import java.util.List;
 public interface UserService {
     User loginUser(User user);
     User addUser(User user);
-    List<String> addToCart(String id,List<String> pid);
+    String addToCart(String id,String product_id);
 }

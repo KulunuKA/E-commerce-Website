@@ -9,4 +9,8 @@ import java.util.Optional;
 
 public interface ProductsRepository extends MongoRepository<Product,String> {
     List<Product> findByCategory(String category, Pageable pageable);
+    List<Product> findByCategoryAndGender(String category, String gender,
+                                          Pageable pageable);
+    List<Product> findByCategory(String category);
+
 }

@@ -2,6 +2,7 @@ package com.fashionhub.server.controller;
 
 import com.fashionhub.server.exception.EmailAlreadyExistsException;
 import com.fashionhub.server.exception.InvalidCredentialsException;
+import com.fashionhub.server.model.ProductIdRequest;
 import com.fashionhub.server.model.User;
 import com.fashionhub.server.service.UserService;
 import com.fashionhub.server.util.ApiResponse;
@@ -55,11 +56,11 @@ public class UserController {
     }
 
     @PutMapping("/addtocart/{id}")
-    public ResponseEntity<ApiResponse<List<String>>> addToCart(@PathVariable String id,
-                                                    @RequestBody List<String> pid){
-        List<String> pids = userService.addToCart(id,pid);
+    public ResponseEntity<ApiResponse<String>> addToCart(@PathVariable String id,
+                                                    @RequestBody ProductIdRequest product_id){
+        String pid = userService.addToCart(id,product_id.getProduct_id());
 
-        return ResponseEntity.ok(new ApiResponse<>(pids, "Successfully added!",
+        return ResponseEntity.ok(new ApiResponse<>(pid, "Successfully added!",
                 0));
     }
 

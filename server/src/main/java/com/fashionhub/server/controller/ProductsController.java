@@ -19,18 +19,27 @@ public class ProductsController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<Product>>> getProducts(
+            @RequestParam(required = false, defaultValue = "all") String gender,
             @RequestParam(required = false, defaultValue = "all") String category,
             @RequestParam(required = false,defaultValue = "4") int limit
     ) {
-        System.out.println(category);
-        List<Product> products = productService.getAllProducts(category,limit);
+
+        List<Product> products = productService.getAllProducts(gender,category,
+                limit);
         return ResponseEntity.ok(new ApiResponse<>(products, "Successfully fetched data", 0));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Product>> getProductById(@PathVariable String id) {
-        System.out.println("product id = " + id);
         Product product = productService.getProductById(id);
         return ResponseEntity.ok(new ApiResponse<>(product, "Successfully fetched data", 0));
+    }
+
+    @GetMapping("/autocomplete")
+    public ResponseEntity<ApiResponse<List<String>>> autocomplete(@RequestParam String keyword) {
+        System.out.println("product keyword = " + keyword);
+        List<String> suggestions = productService.autocompleteSuggestions(keyword);
+        return ResponseEntity.ok(new ApiResponse<>(suggestions, "Successfully fetched " +
+                "data", 0));
     }
 }

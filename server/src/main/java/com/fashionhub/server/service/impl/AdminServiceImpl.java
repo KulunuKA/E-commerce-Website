@@ -1,11 +1,11 @@
 package com.fashionhub.server.service.impl;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import com.fashionhub.server.exception.EmailAlreadyExistsException;
 import com.fashionhub.server.exception.InvalidCredentialsException;
 import com.fashionhub.server.exception.NotFoundException;
 import com.fashionhub.server.model.Admin;
 import com.fashionhub.server.model.Product;
-import com.fashionhub.server.model.User;
 import com.fashionhub.server.repository.AdminRepository;
 import com.fashionhub.server.repository.ProductsRepository;
 import com.fashionhub.server.service.AdminService;
@@ -23,6 +23,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private ProductsRepository productsRepository;
+
+    @Autowired
+    private ElasticsearchClient esClient;
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -53,8 +56,20 @@ public class AdminServiceImpl implements AdminService {
     }
 
     public Product addProduct(Product req) {
-        return productsRepository.save(req);
-    }
+        Product saved =  productsRepository.save(req);
+
+        try {
+            esClient.index(
+                    i -> i
+                            .index("products")
+                            .id(saved.getId())
+                            .document(saved)
+            );
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        return saved;    }
 
     public Product updateProduct(String id, Product req) {
         Product existingProduct =
@@ -73,7 +88,19 @@ public class AdminServiceImpl implements AdminService {
         existingProduct.setGender(req.getGender());
         existingProduct.setStock(req.getStock());
 
-        return productsRepository.save(existingProduct);
+        Product saved = productsRepository.save(existingProduct);
+
+        try {
+            esClient.index(i -> i
+                    .index("products")
+                    .id(saved.getId())
+                    .document(saved)
+            );
+        }  catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        return saved;
     }
 
     public Product deleteProduct(String id) {

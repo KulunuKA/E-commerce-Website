@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -49,17 +50,22 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public List<String> addToCart(String id, List<String> product_id) {
+    public String addToCart(String id, String product_id) {
         User user =
                 userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
 
-        user.setCart_item_ids(product_id);
+        List<String> currentCart = user.getCart_item_ids();
+        if (currentCart == null) {
+            currentCart = new ArrayList<>();
+        }
 
-        List<String> ids = user.getCart_item_ids();
+        currentCart.add(product_id);
+        user.setCart_item_ids(currentCart);
 
         userRepository.save(user);
 
-        return ids;
+        return product_id;
+
 
     }
 }

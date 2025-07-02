@@ -49,7 +49,8 @@ public class Product {
     private String size;
 
     @NotNull(message = "Gender is required")
-    @Pattern(regexp = "Male|Female|Kids|Unisex", message = "Gender must be one of: Male, Female, Kids, Unisex")
+    @Pattern(regexp = "male|female|kids|unisex", message = "Gender must be " +
+            "one of: Male, Female, Kids, Unisex")
     private String  gender;
 
     @NotNull(message = "Stock is required")
