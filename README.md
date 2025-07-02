@@ -1,7 +1,6 @@
-# E-commerce-Website
 # Fashion Hub E-commerce Website
 
-Welcome to the **Fashion Hub** repository! This project is an e-commerce platform designed to deliver a seamless shopping experience for fashion enthusiasts. It features a wide range of functionalities for users, admins, and vendors, focusing on usability, scalability, and performance.
+Welcome to the **Fashion Hub** repository! Fashion Hub is a modern e-commerce platform tailored for the fashion retail industry. Built with React, Spring Boot, MongoDB, and Elasticsearch, it offers seamless user experiences, lightning-fast product search, and a robust admin panel for product management.
 
 ---
 
@@ -21,14 +20,16 @@ Welcome to the **Fashion Hub** repository! This project is an e-commerce platfor
 
 ### User Features
 
-- Browse and search for fashion products.
+- Browse and search fashion products.
+- Fast search with Elasticsearch integration.
 - Secure user authentication and authorization.
 - Product filtering and sorting by category, price, and ratings.
-- Shopping cart and wishlist functionalities.
+- Shopping cart functionality.
 
 ### Admin Features
 
-- Dashboard to manage products, users, and orders.
+- Admin login and authentication.
+- Dashboard for managing products (CRUD).
 - Role-based access control.
 
 ---
@@ -36,72 +37,30 @@ Welcome to the **Fashion Hub** repository! This project is an e-commerce platfor
 ## Technologies Used
 
 - **Frontend**: React.js, Redux, Ant Design, CSS
-- **Backend**: Spring boot
+- **Backend**: Spring Boot
 - **Database**: MongoDB
+- **Search Engine**: Elasticsearch
 - **Authentication**: JWT-based authentication
-
-
 
 ---
 
 ## Getting Started
 
-Follow these steps to set up the project locally:
+Follow these steps to set up the project locally.
 
 ### Prerequisites
 
-- Node.js (v16 or higher)
+- Node.js (v16 or higher) for frontend
+- Java 17+ for Spring Boot backend
 - MongoDB
+- Elasticsearch
 - Git
-
-### Installation
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/your-username/fashion_hub.git
-   ```
-
-2. Navigate to the project directory:
-
-   ```bash
-   cd fashion_hub
-   ```
-
-3. Install dependencies for both frontend and backend:
-
-   ```bash
-   cd frontend && npm install
-   cd ../backend && npm install
-   ```
-
-4. Create a `.env` file in the `backend` folder with the following variables:
-
-   ```env
-   MONGO_URI=your_mongodb_uri
-   JWT_SECRET=your_secret_key
-   STRIPE_KEY=your_stripe_key
-   ```
-
-5. Run the application:
-
-   - Start the backend server:
-     ```bash
-     cd backend && npm start
-     ```
-   - Start the frontend server:
-     ```bash
-     cd frontend && npm start
-     ```
 
 ---
 
-## Usage
+## Installation
 
-Visit `http://localhost:5173` to access the application locally.
+### Clone the repository
 
-- **Users**: Register, log in, and start shopping.
-- **Admins**: Use `/admin` to access the admin dashboard.
-
-
-
+```bash
+git clone https://github.com/your-username/fashion_hub.git
