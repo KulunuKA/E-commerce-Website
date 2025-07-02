@@ -87,8 +87,7 @@ export default function OneItem() {
   }, [item.category]);
 
   //Add product to cart
-  const handleCart = async (event) => {
-    event.preventDefault();
+  const handleCart = async () => {
     setBtnLoading(true);
     if (!reduxUser.email) {
       setAskLogin(true);
@@ -103,19 +102,16 @@ export default function OneItem() {
     }
 
     try {
-      const submitData = {
-        name: item.name,
-        image: item.images[0],
-        price: item.price,
-        quantity: quantity,
-      };
-      const { data, code, msg } = await addCart(submitData, id);
+      const product_id = id;
 
-      if (code === 201) {
+      const { data, code, msg } = await addCart({product_id}, reduxUser.id);
+
+      if (code === 0) {
         notification.success({
-          message: "Product Added",
+          message: "Product added to cart successfully",
         });
-        dispatch(setCartItemCount(quantity));
+
+        dispatch(setCartItemCount(data));
       }
       setBtnLoading(false);
     } catch (error) {
@@ -213,6 +209,7 @@ export default function OneItem() {
                   name="ADD TO CART"
                   onClick={handleCart}
                   loading={btnLoading}
+                  width={150}
                 />
               </div>
             </div>

@@ -5,24 +5,31 @@ import ProductCard from "../../Component/ProductCard/index";
 import { filterProduct } from "../../APIs/userAPIs";
 import { useParams } from "react-router-dom";
 import Loading from "../../Component/Loader";
+import { Box } from "lucide-react";
 
 export default function AllClothing() {
   const limit = 6;
-  const category = "Mens";
   const [product, setProduct] = useState([]);
   const params = useParams();
-  const cate = params.cate;
+  const gender = params?.gender || "all";
+  const category = params?.cate;
+  const [isError, setIsError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = async () => {
     try {
-      const { data, code, msg } = await filterProduct(category, limit);
-      console.log(data, code, msg);
-      if (code === 200) {
+      setIsLoading(true);
+      setIsError("");
+      const { data, code, msg } = await filterProduct(gender, category, limit);
+
+      if (code === 0) {
         setProduct(data);
       }
+      setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      setIsLoading(false);
+      setIsError("Something went wrong while fetching products.");
+      console.log("Error fetching products:", error);
     }
   };
 
@@ -35,31 +42,35 @@ export default function AllClothing() {
   return (
     <>
       <div className="category-name">
-        <p>{cate.replace("-", " ")}</p>
+        <p>{category.replace("-", " ")}</p>
       </div>
+
       <div className="allClothing">
         <Filter />
         <div className="cloths">
-          {!isLoading ? (
+          {isLoading ? (
             <Loading size={60} />
-          ) : (
-            product?.map((e) => (
-              <ProductCard
-                id={e._id}
-                key={e._id}
-                mainImg={e.mainImg}
-                mainTitle={e.mainTitle}
-                addPrice={e.addPrice}
+          ) : isError ? (
+            <p className="error">{isError}</p>
+          ) : product.length === 0 ? (
+            <p className="empty">
+              <Box
+                size={48}
+                style={{ color: "#d0d0d0", marginBottom: "8px" }}
               />
-            ))
+              No products found
+            </p>
+          ) : (
+            product?.map((e) => <ProductCard id={e.id} key={e.id} {...e} />)
           )}
         </div>
       </div>
-      <div className="btn">
-        <a href="#" class="previous round">
+
+      <div className="pagination-btn">
+        <a href="#" className="previous round" aria-label="Previous page">
           &#8249;
         </a>
-        <a href="#" class="next round">
+        <a href="#" className="next round" aria-label="Next page">
           &#8250;
         </a>
       </div>

@@ -34,7 +34,7 @@ export default function AddProduct() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const categories = {
-    Male: [
+    male: [
       "T-shirts & Polos",
       "Hoodies",
       "Casual Pants",
@@ -47,7 +47,7 @@ export default function AddProduct() {
       "Pyjama Pants",
     ],
 
-    Female: [
+    female: [
       "Dresses",
       "T-shirts",
       "Blouses & Shirts",
@@ -219,7 +219,7 @@ export default function AddProduct() {
         <Dropdown
           label="Gender"
           options={["Male", "Female", "Kids", "Unisex"].map((marital) => ({
-            value: marital,
+            value: marital.toLocaleLowerCase(),
             label: marital,
           }))}
           onChange={(e) => {
@@ -230,8 +230,8 @@ export default function AddProduct() {
         />
         <Dropdown
           label="Category"
-          options={categories[formData.gender || "Male"].map((category) => ({
-            value: category,
+          options={categories[formData?.gender || "male"]?.map((category) => ({
+            value: category.toLocaleLowerCase().replace(" ", "-"),
             label: category,
           }))}
           onChange={(e) => {

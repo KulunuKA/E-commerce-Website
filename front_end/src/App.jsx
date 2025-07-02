@@ -20,7 +20,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<OneItem />} />
-          <Route path="/product/:gender/:cate" element={<AllClothing />} />
+          <Route path="/products/:gender/:cate" element={<AllClothing />} />
+          <Route path="/products/:cate" element={<AllClothing />} />
 
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="*" element={<h1>404 Not Found</h1>} />

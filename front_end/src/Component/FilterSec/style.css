@@ -1,0 +1,222 @@
+
+.filter {
+  background: var(--tertiary-color);
+  padding: 2rem;
+  border-radius: 12px;
+  width: 280px;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.filter #shop {
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-dark);
+}
+
+.filter p {
+  color: var(--secondary-color);
+  margin: 0;
+}
+
+.all-cate {
+  margin-bottom: 1.5rem;
+}
+
+.all-cate-tittle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.all-cate-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+}
+
+.all-cate-list p {
+  padding: 0.3rem 0;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.all-cate-list p:hover {
+  color: var(--primary-color);
+}
+
+.all-size {
+  margin-bottom: 1.5rem;
+}
+
+.sizes-btn {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  gap: 8px;
+  margin-top: 0.5rem;
+}
+
+.sizes-btn p {
+  padding: 6px 8px;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sizes-btn p:hover {
+  background-color: var(--hover-color);
+}
+
+.all-materials {
+  margin-bottom: 1.5rem;
+}
+
+.priceRange {
+  margin-bottom: 1.5rem;
+}
+
+.priceRange p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.priceRange input {
+  width: 70px;
+  padding: 6px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+.brand-logo {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 8px;
+  margin-top: 0.5rem;
+}
+
+.brand-logo img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 6px;
+  background: #fff;
+  padding: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.filter .btn {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.filter .btn button {
+  width: 100%;
+  padding: 10px 16px;
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.filter .btn button:hover {
+  background-color: #b50812;
+}
+
+
+.filter-toggle {
+  display: none;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-toggle svg {
+  margin-right: 6px;
+}
+
+.filter {
+  background: var(--tertiary-color);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.filter .all-cate-list p,
+.filter .sizes-btn p {
+  transition: background 0.2s;
+}
+
+.filter .all-cate-list p:hover,
+.filter .sizes-btn p:hover {
+  background: var(--hover-color);
+}
+
+.brand-logo {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 12px;
+}
+
+.brand-logo img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 6px;
+  background: #fff;
+  padding: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.sizes-btn {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  gap: 8px;
+}
+
+.sizes-btn p {
+  padding: 6px 8px;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  background: #fff;
+}
+
+.priceRange input {
+  width: 80px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+@media (max-width: 768px) {
+  .filter-toggle {
+    display: inline-flex;
+  }
+
+  .filter {
+    display: none;
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+
+  .filter.open {
+    display: block;
+  }
+}
